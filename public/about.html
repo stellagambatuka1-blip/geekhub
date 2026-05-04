@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Us - GeekHub</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#f2f2f2;
+  line-height:1.7;
+}
+
+/* HEADER */
+header{
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  flex-wrap:wrap;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:bold;
+}
+
+nav{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(120deg,#000,#333);
+  color:white;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:36px;
+}
+
+.hero p{
+  max-width:600px;
+  margin:10px auto 0;
+  font-size:16px;
+  color:#ccc;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:30px auto;
+  padding:20px;
+}
+
+/* CARD SECTIONS */
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.card h2{
+  margin-top:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* ICON STYLE */
+.icon{
+  color:black;
+  font-size:20px;
+}
+
+/* SOCIAL */
+.social{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-top:15px;
+}
+
+.social a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:white;
+  background:black;
+  padding:10px 15px;
+  border-radius:8px;
+  font-size:14px;
+  transition:0.3s;
+}
+
+.social a:hover{
+  background:#333;
+}
+
+/* GRID (CONTENT TYPES) */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-top:15px;
+}
+
+.grid div{
+  background:#fafafa;
+  padding:15px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  background:#111;
+  color:white;
+  margin-top:40px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero h1{
+    font-size:26px;
+  }
+
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">GeekHub</div>
+  <nav>
+     <a href="index.html">Home</a>
+  <a href="about.html">About</a> |
+  <a href="contact.html">Contact</a>
+  <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Welcome to GeekHub</h1>
+  <p>Your hub for anime, gaming, movies, sports, and trending global news.</p>
+</section>
+
+<div class="container">
+
+  <!-- ABOUT -->
+  <div class="card">
+    <h2><i class="fas fa-user icon"></i> About Us</h2>
+    <p>
+      GeekHub is a fast-growing digital platform focused on delivering engaging content across anime,
+      gaming, movies, sports, and real-world news. We aim to keep readers informed, entertained,
+      and connected to trending stories.
+    </p>
+  </div>
+
+  <!-- WHAT WE DO -->
+  <div class="card">
+    <h2><i class="fas fa-bolt icon"></i> What We Do</h2>
+    <p>
+      We publish breaking news, deep analysis, and trending stories across multiple categories.
+      Our content is designed to be easy to read, informative, and engaging.
+    </p>
+
+    <div class="grid">
+      <div>🎌 Anime Updates</div>
+      <div>🎮 Gaming News</div>
+      <div>🎬 Movie Insights</div>
+      <div>🌍 Global News</div>
+      <div>⚽ Sports Highlights</div>
+      <div>🔥 Viral Trends</div>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <div class="card">
+    <h2><i class="fas fa-bullseye icon"></i> Our Mission</h2>
+    <p>
+      To build a trusted platform where users can explore high-quality content across multiple interests
+      in one place.
+    </p>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="card">
+    <h2><i class="fas fa-share-alt icon"></i> Follow Us</h2>
+    <p>Stay connected with GeekHub across platforms:</p>
+
+    <div class="social">
+      <a href="https://www.facebook.com/profile.php?id=61574286781223"><i class="fab fa-facebook-f"></i> Facebook</a>
+     
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <h2><i class="fas fa-envelope icon"></i> Contact</h2>
+    <p>
+      For inquiries, partnerships, or feedback, visit our contact page or reach out via email.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 GeekHub | All Rights Reserved
+</footer>
+
+</body>
+</html>

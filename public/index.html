@@ -1,35 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="google-site-verification" content="u4sJzdOnUYF3oUa94opcUPkr_Mc9k57JMLMEFNtQiZ8" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GeekHub - Anime, Gaming, Movies & TV News</title>
-<meta name="description" content="GeekHub brings the latest anime, gaming, movie and TV news.">
-<meta name="keywords" content="anime news, gaming news, movie news, tv shows">
+
+<title>GeekHub - Anime, Gaming, Movies & News</title>
+
+<meta name="description" content="GeekHub brings the latest anime, gaming, movie and news updates including sports and pop culture.">
+<meta name="keywords" content="anime news, gaming news, movie news, sports news, pop culture">
 <meta name="author" content="GeekHub">
 <meta name="robots" content="index, follow">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3404435753081620"
+     crossorigin="anonymous"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZ53VCY1H1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WZ53VCY1H1', { 'debug_mode': true });
+</script>
+
 <style>
-body{margin:0;font-family:'Inter',sans-serif;background:#f2f2f2;font-size:21px;}
-header{background:black;color:white;display:flex;justify-content:space-between;align-items:center;padding:20px;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#f2f2f2;
+  font-size:18px;
+}
+
+header{
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+}
+
 .logo{font-size:28px;font-weight:bold;cursor:pointer;}
 nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
-.section{padding:20px;}
-#articles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-.article-card{background:white;border-radius:10px;overflow:hidden;cursor:pointer;transition:0.2s;}
+
+.main-layout{display:flex;gap:20px;padding:20px;}
+
+.hero{flex:2;background:white;border-radius:10px;overflow:hidden;cursor:pointer;}
+.hero img{width:100%;height:380px;object-fit:cover;}
+.hero h2{padding:10px;margin:0;font-size:24px;}
+
+.sidebar{flex:1;background:white;border-radius:10px;padding:10px;}
+
+#articles{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+  padding:20px;
+}
+
+.article-card{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.3s;
+}
 .article-card:hover{transform:scale(1.03);}
-.article-card img{width:100%;height:150px;object-fit:cover;}
-.article-card h3{padding:10px;margin:0;}
-.article-card p{padding:0 10px 10px;margin:0;font-size:14px;color:gray;}
+.article-card img{width:100%;height:180px;object-fit:cover;}
+.article-card h3{padding:10px;margin:0;font-size:18px;}
+.article-card p{padding:0 10px 10px;margin:0;font-size:13px;color:gray;}
+
 #articlePage{display:none;padding:20px;}
-#articlePage img{width:100%;max-width:700px;margin:10px 0;}
-.back{background:black;color:white;border:none;padding:10px 15px;margin-bottom:15px;cursor:pointer;}
-.actions{margin:20px 0;}
-.actions button{padding:8px 15px;margin-right:10px;cursor:pointer;}
-.comment{background:white;padding:10px;margin-bottom:10px;border-radius:6px;}
+
+.article-layout{display:flex;gap:20px;}
+
+.article-main{
+  flex:2;
+  background:white;
+  padding:15px;
+  border-radius:10px;
+}
+
+.article-side{
+  flex:1;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+.side-item{display:flex;gap:10px;margin-bottom:10px;cursor:pointer;}
+.side-item img{width:80px;height:60px;object-fit:cover;border-radius:6px;}
+.side-item span{font-size:14px;}
+
+.back{
+  background:black;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  margin-bottom:15px;
+  cursor:pointer;
+}
+
+.actions button{
+  padding:8px 15px;
+  margin-right:10px;
+  cursor:pointer;
+}
+
+.comment{
+  background:white;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:6px;
+}
 /* =========================
-   📱 MOBILE (Phones)
+   MOBILE RESPONSIVE FIX
 ========================= */
-@media (max-width: 600px){
+@media (max-width: 768px){
 
   body{
     font-size:16px;
@@ -38,18 +125,13 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
   header{
     flex-direction:column;
     align-items:flex-start;
-    padding:15px;
-  }
-
-  .logo{
-    font-size:22px;
-    margin-bottom:10px;
+    gap:10px;
   }
 
   nav{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
+    gap:10px;
   }
 
   nav a{
@@ -57,190 +139,504 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
     font-size:14px;
   }
 
-  #articles{
-    grid-template-columns:1fr;
+  /* STACK MAIN LAYOUT */
+  .main-layout{
+    flex-direction:column;
+    padding:10px;
   }
 
-  .article-card img{
-    height:180px;
+  .hero img{
+    height:220px; /* was 380 = too big */
   }
 
-  #articlePage img{
-    width:100%;
-  }
-
-  textarea{
-    width:100%;
-    height:80px;
-  }
-}
-
-
-/* =========================
-   📱 TABLET
-========================= */
-@media (max-width: 900px){
-
-  body{
+  .hero h2{
     font-size:18px;
   }
 
-  header{
-    flex-wrap:wrap;
-  }
-
-  nav{
+  .sidebar{
     margin-top:10px;
   }
 
+  /* ARTICLES GRID */
   #articles{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr; /* single column */
+    padding:10px;
   }
 
   .article-card img{
     height:160px;
   }
+
+  .article-card h3{
+    font-size:16px;
+  }
+
+  /* ARTICLE PAGE STACK */
+  .article-layout{
+    flex-direction:column;
+  }
+
+  .article-main{
+    padding:10px;
+  }
+
+  .article-main img{
+    height:220px;
+    object-fit:cover;
+  }
+
+  .article-side{
+    margin-top:15px;
+  }
+
+  /* SIDE ITEMS */
+  .side-item img{
+    width:70px;
+    height:50px;
+  }
+
+  .side-item span{
+    font-size:13px;
+  }
+
+  /* BUTTONS */
+  .actions button{
+    margin-bottom:8px;
+    width:100%;
+  }
+
+  textarea{
+    width:100%;
+    min-height:80px;
+  }
+
+  footer{
+    font-size:12px;
+    padding:15px;
+  }
 }
 
 
 /* =========================
-   💻 LARGE SCREENS
+   EXTRA SMALL PHONES
 ========================= */
-@media (min-width: 1200px){
+@media (max-width: 480px){
 
-  body{
+  .logo{
+    font-size:22px;
+  }
+
+  .hero img{
+    height:180px;
+  }
+
+  .hero h2{
+    font-size:16px;
+  }
+
+  .article-main h1{
     font-size:20px;
   }
 
-  #articles{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .section{
-    max-width:1200px;
-    margin:auto;
-  }
-
+}
+footer{
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+  background:#111;
+  color:white;
+  font-size:14px;
 }
 
+#likeNudge{
+  position:fixed;
+  bottom:80px;
+  right:20px;
+  background:#ff4d6d;
+  color:white;
+  padding:12px 18px;
+  border-radius:30px;
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.4s ease;
+  z-index:999;
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
 
+#likeNudge.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0JW2ELCCX8"></script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date()); gtag('config','G-0JW2ELCCX8');
-</script>
 </head>
+
 <body>
+
 <header>
-<div class="logo" onclick="showHome()">GeekHub</div>
+<div class="logo" onclick="goHome()">GeekHub</div>
 <nav>
-<a onclick="showHome()">Home</a>
+<a onclick="goHome()">Home</a>
 <a onclick="showCategory('anime')">Anime</a>
 <a onclick="showCategory('gaming')">Gaming</a>
 <a onclick="showCategory('movies')">Movies</a>
-<a onclick="showCategory('tv')">TV</a>
-<a onclick="showTrending()">Trending</a>
-<a onclick="showLiked()">Most Liked</a>
-<a onclick="showCommented()">Most Commented</a>
+<a onclick="showCategory('news')">News</a>
+<a onclick="showCategory('sports')">Sports</a>
+<a onclick="showCategory('pop')">Pop Culture</a>
 </nav>
 </header>
 
-<section class="section" id="homePage">
-<h2 id="sectionTitle">Latest Articles</h2>
+<div class="main-layout" id="homeLayout">
+  <div class="hero" id="hero"></div>
+  <div class="sidebar" id="sidebar"></div>
+</div>
+
 <div id="articles"></div>
-</section>
 
 <section id="articlePage">
+<div class="article-layout">
+
+<div class="article-main">
 <button class="back" onclick="goHome()">⬅ Back</button>
+
 <div id="articleContent"></div>
+
 <div class="actions">
 <button onclick="likeArticle()">👍 Like <span id="likeCount">0</span></button>
 <button onclick="favArticle()">⭐ Favourite</button>
 </div>
+
 <h3>Comments</h3>
 <div id="comments"></div>
+
 <textarea id="commentText" placeholder="Write comment..."></textarea>
 <button onclick="addComment()">Post Comment</button>
+
+<button onclick="openEdit()">✏️ Edit</button>
+</div>
+
+<div class="article-side" id="articleSide"></div>
+
+</div>
 </section>
+<div id="likeNudge">
+  ❤️ Enjoying this? Tap Like!
+</div>
+<footer>
+  © 2026 GeekHub | Anime • Gaming • Movies • News
+  
+  <nav>
+    <a href="index.html">Home</a><br>
+    <a href="about.html">About</a><br>
+    <a href="contact.html">Contact</a><br>
+    <a href="privacy.html">Privacy</a><br>
+  </nav>
+</footer>
 
 <script>
-let currentArticle=null,ADMIN_KEY="Gambatukatiyamike03";
+let currentArticle=null;
+let ADMIN_KEY="Gambatukatiyamike03";
+const API = window.location.origin;
 
-async function loadArticles(){
-  const res=await fetch("/articles"); const db=await res.json();
-  let data={anime:[],gaming:[],movies:[],tv:[]};
-  db.forEach(a=>{ if(data[a.category]) data[a.category].push(a); });
-  return data;
+/* =========================
+   FORMAT DATE
+========================= */
+function formatDate(date){
+  if(!date) return "";
+  const d=new Date(date);
+  return d.toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
 }
 
-function renderArticles(list){
-  const container=document.getElementById("articles"); container.innerHTML="";
-  if(list.length===0){container.innerHTML="<p>No articles available.</p>"; return;}
-  list.forEach(a=>{
-    const card=document.createElement("div"); card.className="article-card";
-    card.innerHTML=`<img src="${a.image||'https://via.placeholder.com/300x150'}"><h3>${a.title}</h3><p>👍 ${a.likes||0} | 💬 ${(a.comments||[]).length}</p>`;
-    card.onclick=()=>openArticle(a); container.appendChild(card);
+/* =========================
+   URL HANDLING
+========================= */
+function setURL(article, replace=false){
+  const url = article && article._id ? `/article/${article._id}` : `/`;
+  if(replace){
+    history.replaceState({}, "", url);
+  }else{
+    history.pushState({}, "", url);
+  }
+}
+
+/* =========================
+   LOAD ARTICLES
+========================= */
+async function loadArticles(){
+  try{
+    const res=await fetch(`${API}/articles`);
+    const data=await res.json();
+    return Array.isArray(data)?data:[];
+  }catch(e){return [];}
+}
+
+/* =========================
+   HOME HERO + SIDEBAR
+========================= */
+function buildHome(data){
+  if(!data.length) return;
+
+  const sorted=[...data].sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  document.getElementById("hero").innerHTML=`
+    <img src="${sorted[0].image||''}">
+    <h2>${sorted[0].title}</h2>
+  `;
+
+  document.getElementById("hero").onclick=()=>openArticle(sorted[0]);
+
+  const side=document.getElementById("sidebar");
+  side.innerHTML="<h3>Trending</h3>";
+
+  sorted.slice(0,5).forEach(a=>{
+    const div=document.createElement("div");
+    div.innerHTML="🔥 "+a.title;
+    div.onclick=()=>openArticle(a);
+    side.appendChild(div);
   });
 }
 
-function getTimeAgo(timestamp){
-  const now = Date.now();
-  const diff = now - timestamp;
+/* =========================
+   RENDER ARTICLES
+========================= */
+function renderArticles(list){
+  const container=document.getElementById("articles");
+  container.innerHTML="";
 
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const sorted=[...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  buildHome(sorted);
 
-  if(seconds < 60) return "Just now";
-  if(minutes < 60) return minutes + " min ago";
-  if(hours < 24) return hours + " hrs ago";
-  if(days < 7) return days + " days ago";
+  sorted.forEach(a=>{
+    const card=document.createElement("div");
+    card.className="article-card";
 
-  const d = new Date(timestamp);
-  return d.toLocaleDateString("en-US",{year:'numeric',month:'short',day:'numeric'});
+    card.innerHTML=`
+      <img src="${a.image||''}">
+      <h3>${a.title}</h3>
+      <p>👍 ${a.likes||0} | 💬 ${(a.comments||[]).length}</p>
+    `;
+
+    const meta=document.createElement("small");
+    meta.style.padding="0 10px";
+    meta.style.display="block";
+    meta.style.color="gray";
+    meta.innerText=`By ${a.author||"GeekHub"} • ${formatDate(a.date)}`;
+    card.appendChild(meta);
+
+    card.onclick=()=>openArticle(a);
+    container.appendChild(card);
+  });
 }
 
+/* =========================
+   OPEN ARTICLE
+========================= */
 function openArticle(article){
   currentArticle=article;
-  document.getElementById("homePage").style.display="none";
+  setURL(article);
+
+  document.getElementById("homeLayout").style.display="none";
+  document.getElementById("articles").style.display="none";
   document.getElementById("articlePage").style.display="block";
-
-  const editButton=`<button onclick="requestEdit()">✏️ Edit</button>`;
-  const formatted=getTimeAgo(article.date||Date.now()); // ✅ ONLY CHANGE HERE
-
-  const infoBox=`<div style="display:flex;align-items:center;margin:10px 0;background:#f2f2f2;padding:10px;border-radius:8px;">
-<img src="${article.authorImage||'https://via.placeholder.com/50'}" style="width:40px;height:40px;border-radius:50%;margin-right:10px;">
-<span>Written by <strong>${article.author||'GeekHub Team'}</strong> | ${formatted}</span></div>`;
 
   document.getElementById("articleContent").innerHTML=`
     <h1>${article.title}</h1>
-    <img src="${article.image||'https://via.placeholder.com/300x150'}">
-    ${infoBox}
+    <p style="color:gray">By ${article.author||"GeekHub"} • ${formatDate(article.date)}</p>
+    <img src="${article.image||''}" style="width:100%">
     <div>${article.content}</div>
-    ${editButton}
   `;
+
   document.getElementById("likeCount").innerText=article.likes||0;
+
+  loadComments();
+
+  loadArticles().then(data=>{
+    const side=document.getElementById("articleSide");
+    side.innerHTML="<h3>More in this category</h3>";
+
+    data
+      .filter(a=>a.category===article.category && a._id!==article._id)
+      .slice(0,5)
+      .forEach(a=>{
+        const div=document.createElement("div");
+        div.className="side-item";
+        div.innerHTML=`<img src="${a.image||''}"><span>${a.title}</span>`;
+        div.onclick=()=>openArticle(a);
+        side.appendChild(div);
+      });
+  });
+
+  // ✅ TRIGGER ANIMATION
+  showLikeNudge();
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+function goHome(){
+  setURL(null);
+  document.getElementById("articlePage").style.display="none";
+  document.getElementById("homeLayout").style.display="flex";
+  document.getElementById("articles").style.display="grid";
+  showHome();
+}
+
+window.onpopstate = () => {
+  const path = window.location.pathname;
+
+  if(path.startsWith("/article/")){
+    const id = path.split("/article/")[1];
+
+    fetch(`${API}/articles/${id}`)
+      .then(r=>r.json())
+      .then(article=>{
+        if(article && article._id){
+          openArticle(article);
+        }
+      });
+  } else {
+    goHome();
+  }
+};
+
+/* =========================
+   LOAD DATA
+========================= */
+async function showHome(){
+  const data=await loadArticles();
+  renderArticles(data);
+}
+
+async function showCategory(cat){
+  const data=await loadArticles();
+  renderArticles(data.filter(a=>a.category===cat));
+}
+
+/* =========================
+   COMMENTS
+========================= */
+function loadComments(){
+  const box=document.getElementById("comments");
+  box.innerHTML="";
+  (currentArticle.comments||[]).forEach(c=>{
+    const d=document.createElement("div");
+    d.className="comment";
+    d.innerText=c;
+    box.appendChild(d);
+  });
+}
+
+/* =========================
+   LIKE SYSTEM
+========================= */
+async function likeArticle(){
+  if(!currentArticle) return;
+  await fetch(`${API}/articles/${currentArticle._id}/like`,{method:"POST"});
+  currentArticle.likes=(currentArticle.likes||0)+1;
+  document.getElementById("likeCount").innerText=currentArticle.likes;
+}
+
+/* =========================
+   COMMENTS POST
+========================= */
+async function addComment(){
+  const t=document.getElementById("commentText").value;
+  if(!t) return;
+
+  await fetch(`${API}/articles/${currentArticle._id}/comment`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({comment:t})
+  });
+
+  if(!currentArticle.comments) currentArticle.comments=[];
+  currentArticle.comments.push(t);
+
+  document.getElementById("commentText").value="";
   loadComments();
 }
 
-function requestEdit(){let stored=localStorage.getItem("adminKey"); if(stored!==ADMIN_KEY){const key=prompt("Enter admin key:"); if(key===ADMIN_KEY){localStorage.setItem("adminKey",key); alert("Access ✅"); editArticle();}else alert("Wrong ❌");}else editArticle();}
-function editArticle(){localStorage.setItem("editArticle",JSON.stringify(currentArticle)); window.location.href="/write.html";}
+/* =========================
+   OTHER ACTIONS
+========================= */
+function favArticle(){
+  alert("Saved to favourites (you can connect backend later)");
+}
 
-function goHome(){document.getElementById("homePage").style.display="block";document.getElementById("articlePage").style.display="none";showHome();}
+function openEdit(){
+  const key=prompt("Enter admin key:");
+  if(key===ADMIN_KEY){
+    localStorage.setItem("editArticle",JSON.stringify(currentArticle));
+    window.location.href="/write.html";
+  }
+}
 
-async function likeArticle(){if(!currentArticle)return; await fetch(`/articles/${currentArticle.id}/like`,{method:"POST"}); currentArticle.likes++; document.getElementById("likeCount").innerText=currentArticle.likes;}
-async function favArticle(){if(!currentArticle)return; await fetch(`/articles/${currentArticle.id}/favourite`,{method:"POST"}); currentArticle.fav=true; alert("Added ⭐");}
-async function addComment(){const t=document.getElementById("commentText").value.trim(); if(!t)return alert("Empty"); if(!currentArticle.comments) currentArticle.comments=[]; await fetch(`/articles/${currentArticle.id}/comment`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({comment:t})}); currentArticle.comments.push(t); document.getElementById("commentText").value=""; loadComments();}
-function loadComments(){const box=document.getElementById("comments"); box.innerHTML=""; if(!currentArticle.comments) return; currentArticle.comments.forEach(c=>{const d=document.createElement("div");d.className="comment";d.innerText=c; box.appendChild(d);});}
+/* =========================
+   DIRECT LINK CHECK
+========================= */
+checkDirectLink();
 
-async function showHome(){document.getElementById("sectionTitle").innerText="Latest Articles"; const data=await loadArticles(); let all=[...data.anime,...data.gaming,...data.movies,...data.tv]; all.sort((a,b)=>b.date-a.date); renderArticles(all);}
-async function showCategory(cat){document.getElementById("sectionTitle").innerText=cat.toUpperCase(); const data=await loadArticles(); renderArticles(data[cat]);}
-async function showTrending(){document.getElementById("sectionTitle").innerText="Trending"; const data=await loadArticles(); let all=[...data.anime,...data.gaming,...data.movies,...data.tv]; all.forEach(a=>a.score=(a.likes||0)+((a.comments||[]).length*2)+(a.fav?3:0)); all.sort((a,b)=>b.score-a.score); renderArticles(all);}
-async function showLiked(){const data=await loadArticles(); let all=[...data.anime,...data.gaming,...data.movies,...data.tv]; all.sort((a,b)=>(b.likes||0)-(a.likes||0)); renderArticles(all);}
-async function showCommented(){const data=await loadArticles(); let all=[...data.anime,...data.gaming,...data.movies,...data.tv]; all.sort((a,b)=>((b.comments||[]).length)-((a.comments||[]).length)); renderArticles(all);}
-showHome();
+function checkDirectLink(){
+  const path=window.location.pathname;
+
+  if(path.startsWith("/article/")){
+    const id=path.split("/article/")[1];
+
+    fetch(`${API}/articles/${id}`)
+      .then(r=>r.json())
+      .then(article=>{
+        if(article && article._id){
+          openArticle(article);
+        }else showHome();
+      });
+  }else showHome();
+}
+
+/* =========================
+   LIKE NUDGE ANIMATION
+========================= */
+let nudgeReady = false;
+
+function showLikeNudge(){
+  const nudge = document.getElementById("likeNudge");
+
+  nudge.innerHTML = "❤️ Enjoying this? Tap Like!";
+  nudge.style.background = "#ff4d6d";
+
+  setTimeout(()=>{
+    nudge.classList.add("show");
+    nudgeReady = true;
+  }, 4000);
+
+  setTimeout(()=>{
+    nudge.classList.remove("show");
+    nudgeReady = false;
+  }, 12000);
+}
+
+document.getElementById("likeNudge").onclick = () => {
+  if(!nudgeReady) return;
+
+  likeArticle();
+
+  const nudge = document.getElementById("likeNudge");
+  nudge.innerHTML = "🔥 Thanks for the support!";
+  nudge.style.background = "#28a745";
+
+  setTimeout(()=>{
+    nudge.classList.remove("show");
+  },2000);
+};
 </script>
+
 </body>
 </html>
