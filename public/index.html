@@ -70,22 +70,72 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
 .article-card h3{padding:10px;margin:0;font-size:18px;}
 .article-card p{padding:0 10px 10px;margin:0;font-size:13px;color:gray;}
 
-#articlePage{display:none;padding:20px;}
-
-.article-layout{display:flex;gap:20px;}
-
-.article-main{
-  flex:2;
-  background:white;
-  padding:15px;
-  border-radius:10px;
+#articlePage{
+  display:none;
+  padding:20px;
 }
 
+/* =========================
+   FIXED ARTICLE LAYOUT (IMPORTANT PART)
+========================= */
+.article-layout{
+  display:flex;
+  gap:30px;
+  max-width:1200px;
+  margin:0 auto;
+  align-items:flex-start;
+}
+
+/* MAIN ARTICLE */
+.article-main{
+  flex:3;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+
+  max-width:750px;
+  width:100%;
+
+  box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+/* ARTICLE CONTENT IMPROVEMENT */
+.article-main h1{
+  font-size:30px;
+  line-height:1.3;
+  margin-bottom:10px;
+}
+
+.article-main p,
+.article-main div{
+  line-height:1.8;
+  font-size:17px;
+  color:#222;
+}
+
+/* IMAGE FIX */
+.article-main img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:12px;
+  margin:20px 0;
+}
+
+/* SIDEBAR FIX */
 .article-side{
   flex:1;
   background:white;
-  padding:10px;
-  border-radius:10px;
+  padding:15px;
+  border-radius:12px;
+
+  position:sticky;
+  top:20px;
+
+  height:fit-content;
+  min-width:260px;
+
+  box-shadow:0 5px 20px rgba(0,0,0,0.05);
 }
 
 .side-item{display:flex;gap:10px;margin-bottom:10px;cursor:pointer;}
@@ -113,8 +163,9 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
   margin-bottom:10px;
   border-radius:6px;
 }
+
 /* =========================
-   MOBILE RESPONSIVE FIX
+   MOBILE FIX (CLEAN)
 ========================= */
 @media (max-width: 768px){
 
@@ -139,14 +190,13 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
     font-size:14px;
   }
 
-  /* STACK MAIN LAYOUT */
   .main-layout{
     flex-direction:column;
     padding:10px;
   }
 
   .hero img{
-    height:220px; /* was 380 = too big */
+    height:220px;
   }
 
   .hero h2{
@@ -157,9 +207,8 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
     margin-top:10px;
   }
 
-  /* ARTICLES GRID */
   #articles{
-    grid-template-columns:1fr; /* single column */
+    grid-template-columns:1fr;
     padding:10px;
   }
 
@@ -171,25 +220,22 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
     font-size:16px;
   }
 
-  /* ARTICLE PAGE STACK */
+  /* ARTICLE FIX MOBILE */
   .article-layout{
     flex-direction:column;
-  }
-
-  .article-main{
     padding:10px;
   }
 
-  .article-main img{
-    height:220px;
-    object-fit:cover;
+  .article-main{
+    max-width:100%;
+    padding:15px;
   }
 
   .article-side{
-    margin-top:15px;
+    position:static;
+    margin-top:20px;
   }
 
-  /* SIDE ITEMS */
   .side-item img{
     width:70px;
     height:50px;
@@ -199,7 +245,6 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
     font-size:13px;
   }
 
-  /* BUTTONS */
   .actions button{
     margin-bottom:8px;
     width:100%;
@@ -216,10 +261,6 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
   }
 }
 
-
-/* =========================
-   EXTRA SMALL PHONES
-========================= */
 @media (max-width: 480px){
 
   .logo{
@@ -237,8 +278,8 @@ nav a{color:white;margin-left:15px;text-decoration:none;cursor:pointer;}
   .article-main h1{
     font-size:20px;
   }
-
 }
+
 footer{
   text-align:center;
   padding:20px;
@@ -605,37 +646,59 @@ function checkDirectLink(){
    LIKE NUDGE ANIMATION
 ========================= */
 let nudgeReady = false;
+let nudge = null;
+
+let showTimer = null;
+let autoHideTimer = null;
 
 function showLikeNudge(){
-  const nudge = document.getElementById("likeNudge");
+  nudge = document.getElementById("likeNudge");
+  if(!nudge) return;
 
-  nudge.innerHTML = "❤️ Enjoying this? Tap Like!";
-  nudge.style.background = "#ff4d6d";
+  // CLEAR OLD TIMERS (important fix)
+  clearTimeout(showTimer);
+  clearTimeout(autoHideTimer);
 
-  setTimeout(()=>{
+  // reset state
+  nudge.classList.remove("show");
+  nudgeReady = false;
+
+  // show after 4 seconds
+  showTimer = setTimeout(() => {
     nudge.classList.add("show");
     nudgeReady = true;
-  }, 4000);
 
-  setTimeout(()=>{
-    nudge.classList.remove("show");
-    nudgeReady = false;
-  }, 12000);
+    // AUTO HIDE AFTER 3 MINUTES
+    autoHideTimer = setTimeout(() => {
+      nudge.classList.remove("show");
+      nudgeReady = false;
+    }, 180000);
+
+  }, 4000);
 }
 
-document.getElementById("likeNudge").onclick = () => {
-  if(!nudgeReady) return;
+/* CLICK HANDLER */
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("likeNudge");
+  if(!el) return;
 
-  likeArticle();
+  el.onclick = () => {
+    if(!nudgeReady) return;
 
-  const nudge = document.getElementById("likeNudge");
-  nudge.innerHTML = "🔥 Thanks for the support!";
-  nudge.style.background = "#28a745";
+    likeArticle();
 
-  setTimeout(()=>{
-    nudge.classList.remove("show");
-  },2000);
-};
+    el.innerHTML = "🔥 Thanks for the support!";
+    el.style.background = "#28a745";
+
+    nudgeReady = false;
+
+    clearTimeout(autoHideTimer);
+
+    setTimeout(() => {
+      el.classList.remove("show");
+    }, 1200);
+  };
+});;
 </script>
 
 </body>
