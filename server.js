@@ -58,7 +58,7 @@ app.use(express.static("public"));
 // HOME
 // ===============================
 app.get("/", (req, res) => {
-  res.send("GeekHub MongoDB Server 🚀");
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 // ===============================
