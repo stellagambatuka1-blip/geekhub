@@ -11,17 +11,21 @@ const PORT = process.env.PORT || 3000;
 // ===============================
 // MONGODB
 // ===============================
-const MONGO_URI = "mongodb+srv://stellagambatuka1_db_user:EtyGMOF5MPwjdAc5@cluster0.xruwis5.mongodb.net/geekhub?retryWrites=true&w=majority";
+const MONGO_URI =
+  "mongodb+srv://stellagambatuka1_db_user:EtyGMOF5MPwjdAc5@cluster0.xruwis5.mongodb.net/geekhub?retryWrites=true&w=majority";
 
-mongoose.connect(MONGO_URI)
+mongoose
+  .connect(MONGO_URI)
   .then(() => console.log("MongoDB Connected ✅"))
-  .catch(err => console.log("Mongo Error ❌", err));
+  .catch((err) => console.log("Mongo Error ❌", err));
 
 // ===============================
 // SLUG HELPER
 // ===============================
 const slugify = (text) =>
-  text.toString().toLowerCase()
+  text
+    .toString()
+    .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "");
 
@@ -40,25 +44,28 @@ const ArticleSchema = new mongoose.Schema({
   unseen: { type: Boolean, default: false },
   author: { type: String, default: "GeekHub Team" },
   authorImage: String,
-  slug: String
+  slug: String,
 });
 
 const Article = mongoose.model("Article", ArticleSchema);
 
 // ===============================
-// MIDDLEWARE (ORDER FIXED)
+// MIDDLEWARE
 // ===============================
 app.use(cors());
 app.use(express.json());
-
-// ✅ IMPORTANT: static files FIRST
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
 // ===============================
-// ROUTES
+// HOME
 // ===============================
+app.get("/", (req, res) => {
+  res.send("GeekHub MongoDB Server 🚀");
+});
 
-// HOME API
+// ===============================
+// GET ALL ARTICLES
+// ===============================
 app.get("/articles", async (req, res) => {
   try {
     const data = await Article.find({ unseen: false }).sort({ date: -1 });
@@ -68,7 +75,9 @@ app.get("/articles", async (req, res) => {
   }
 });
 
-// GET ONE ARTICLE
+// ===============================
+// GET ONE ARTICLE (BY ID)
+// ===============================
 app.get("/articles/:id", async (req, res) => {
   try {
     const a = await Article.findById(req.params.id);
@@ -79,33 +88,41 @@ app.get("/articles/:id", async (req, res) => {
   }
 });
 
-// GET BY SLUG
+// ===============================
+// GET ARTICLE BY SLUG
+// ===============================
 app.get("/article/slug/:slug", async (req, res) => {
   try {
     const article = await Article.findOne({ slug: req.params.slug });
+
     if (!article) return res.status(404).json({ message: "Not found ❌" });
+
     res.json(article);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// CREATE ARTICLE
+// ===============================
+// ADD ARTICLE
+// ===============================
 app.post("/articles", async (req, res) => {
   try {
     const article = new Article({
       ...req.body,
-      slug: slugify(req.body.title)
+      slug: slugify(req.body.title),
     });
 
     await article.save();
-    res.json(article);
+    res.json({ message: "Article saved ✅", slug: article.slug });
   } catch (err) {
     res.status(500).json({ error: "Failed to save" });
   }
 });
 
-// UPDATE
+// ===============================
+// UPDATE ARTICLE
+// ===============================
 app.put("/articles/:id", async (req, res) => {
   try {
     const updated = await Article.findByIdAndUpdate(
@@ -114,30 +131,68 @@ app.put("/articles/:id", async (req, res) => {
       { new: true }
     );
 
-    res.json(updated);
+    if (!updated) {
+      return res.status(404).json({ error: "Not found ❌" });
+    }
+
+    res.json({ message: "Updated ✅", article: updated });
   } catch (err) {
-    res.status(500).json({ error: "Update failed" });
+    res.status(500).json({ error: "Update failed ❌" });
   }
 });
 
+// ===============================
 // LIKE
+// ===============================
 app.post("/articles/:id/like", async (req, res) => {
-  await Article.findByIdAndUpdate(req.params.id, { $inc: { likes: 1 } });
-  res.json({ ok: true });
+  try {
+    await Article.findByIdAndUpdate(req.params.id, {
+      $inc: { likes: 1 },
+    });
+    res.json({ message: "Liked ✅" });
+  } catch (err) {
+    res.status(500).json({ error: "Like failed ❌" });
+  }
 });
 
+// ===============================
+// FAV
+// ===============================
+app.post("/articles/:id/favourite", async (req, res) => {
+  try {
+    await Article.findByIdAndUpdate(req.params.id, { fav: true });
+    res.json({ message: "Favourited ✅" });
+  } catch (err) {
+    res.status(500).json({ error: "Fav failed ❌" });
+  }
+});
+
+// ===============================
 // COMMENT
+// ===============================
 app.post("/articles/:id/comment", async (req, res) => {
-  await Article.findByIdAndUpdate(req.params.id, {
-    $push: { comments: req.body.comment }
-  });
-  res.json({ ok: true });
+  try {
+    await Article.findByIdAndUpdate(req.params.id, {
+      $push: { comments: req.body.comment },
+    });
+    res.json({ message: "Comment added ✅" });
+  } catch (err) {
+    res.status(500).json({ error: "Comment failed ❌" });
+  }
 });
 
-// DELETE (soft delete)
+// ===============================
+// DELETE
+// ===============================
 app.delete("/articles/:id", async (req, res) => {
-  await Article.findByIdAndUpdate(req.params.id, { unseen: true });
-  res.json({ ok: true });
+  try {
+    await Article.findByIdAndUpdate(req.params.id, {
+      unseen: true,
+    });
+    res.json({ message: "Deleted ✅" });
+  } catch (err) {
+    res.status(500).json({ error: "Delete failed ❌" });
+  }
 });
 
 // ===============================
@@ -152,7 +207,7 @@ if (!fs.existsSync(uploadFolder)) {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadFolder),
   filename: (req, file, cb) =>
-    cb(null, Date.now() + path.extname(file.originalname))
+    cb(null, Date.now() + path.extname(file.originalname)),
 });
 
 const upload = multer({ storage });
@@ -162,13 +217,13 @@ app.post("/upload", upload.single("image"), (req, res) => {
 });
 
 // ===============================
-// SPA FALLBACK (FIXED ORDER)
-// ===============================
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
+// START SERVER
 // ===============================
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// DIRECT PAGE LOAD
+app.get("/article/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
