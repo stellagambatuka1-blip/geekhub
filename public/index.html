@@ -416,11 +416,15 @@ function formatDate(date){
   return d.toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});
 }
 
+function showCategory(category){
+  alert("Category clicked: " + category);
+}
+
 /* =========================
    URL HANDLING
 ========================= */
 function setURL(article, replace=false){
-  const url = article && article._id ? `/article/${article._id}` : `/`;
+  const url = rarticle && article._id ? `/article/${article._id}` : `/`;
   if(replace){
     history.replaceState({}, "", url);
   }else{
@@ -524,7 +528,10 @@ function openArticle(article){
     side.innerHTML="<h3>More in this category</h3>";
 
     data
-      .filter(a=>a.category===article.category && a._id!==article._id)
+    .filter(a =>
+  a.category === article.category &&
+  (a._id ? a._id !== article._id : true)
+)
       .slice(0,5)
       .forEach(a=>{
         const div=document.createElement("div");
@@ -571,15 +578,27 @@ window.onpopstate = () => {
 /* =========================
    LOAD DATA
 ========================= */
+/* =========================
+   LOAD DATA
+========================= */
 async function showHome(){
-  const data=await loadArticles();
-  renderArticles(data);
+  const dbArticles = await loadArticles();
+
+  let animeArticles = [];
+  try {
+    animeArticles = await getAnimeNews();
+  } catch (e) {
+    console.log("Anime API failed:", e);
+  }
+
+  const combined = [
+    ...(animeArticles || []),
+    ...(dbArticles || [])
+  ];
+
+  renderArticles(combined);
 }
 
-async function showCategory(cat){
-  const data=await loadArticles();
-  renderArticles(data.filter(a=>a.category===cat));
-}
 
 /* =========================
    COMMENTS
@@ -599,29 +618,61 @@ function loadComments(){
    LIKE SYSTEM
 ========================= */
 async function likeArticle(){
+
   if(!currentArticle) return;
-  await fetch(`${API}/articles/${currentArticle._id}/like`,{method:"POST"});
-  currentArticle.likes=(currentArticle.likes||0)+1;
-  document.getElementById("likeCount").innerText=currentArticle.likes;
+
+  if(!currentArticle._id){
+    alert("Likes only work on GeekHub articles.");
+    return;
+  }
+
+  await fetch(
+    `${API}/articles/${currentArticle._id}/like`,
+    {method:"POST"}
+  );
+
+  currentArticle.likes =
+    (currentArticle.likes || 0) + 1;
+
+  document.getElementById("likeCount").innerText =
+    currentArticle.likes;
 }
 
 /* =========================
    COMMENTS POST
 ========================= */
 async function addComment(){
-  const t=document.getElementById("commentText").value;
+
+  const t =
+    document.getElementById("commentText").value;
+
   if(!t) return;
 
-  await fetch(`${API}/articles/${currentArticle._id}/comment`,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({comment:t})
-  });
+  if(!currentArticle._id){
+    alert("Comments only work on GeekHub articles.");
+    return;
+  }
 
-  if(!currentArticle.comments) currentArticle.comments=[];
+  await fetch(
+    `${API}/articles/${currentArticle._id}/comment`,
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        comment:t
+      })
+    }
+  );
+
+  if(!currentArticle.comments)
+    currentArticle.comments = [];
+
   currentArticle.comments.push(t);
 
-  document.getElementById("commentText").value="";
+  document.getElementById("commentText").value = "";
+
   loadComments();
 }
 
@@ -664,6 +715,86 @@ function checkDirectLink(){
 /* =========================
    LIKE NUDGE ANIMATION
 ========================= */
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+async function getAnimeNews(){
+
+  const lastFetch =
+    localStorage.getItem("animeLastFetch");
+
+  if(
+    lastFetch &&
+    Date.now() - Number(lastFetch) < ONE_DAY
+  ){
+
+    let saved = [];
+try {
+  saved = JSON.parse(localStorage.getItem("animeArticles")) || [];
+} catch (e) {
+  saved = [];
+}
+
+    return saved || [];
+  }
+
+  try{
+
+    const res =
+  await fetch(
+    "https://api.jikan.moe/v4/top/anime"
+  );
+
+if(!res.ok){
+  throw new Error("Anime API request failed");
+}
+
+const data = await res.json();
+
+     const articles =
+  (data.data || []).slice(0,10).map(a => ({
+
+        title:a.title,
+
+        image:
+          a.images?.jpg?.image_url || "",
+
+        content:
+          a.synopsis ||
+          "No description available.",
+
+        category:"anime",
+
+        author:"Anime API",
+
+        likes:0,
+
+        comments:[],
+
+        date:new Date().toISOString()
+
+      }));
+
+    localStorage.setItem(
+      "animeArticles",
+      JSON.stringify(articles)
+    );
+
+    localStorage.setItem(
+      "animeLastFetch",
+      Date.now()
+    );
+
+    return articles;
+
+  }catch(err){
+
+    console.error(err);
+    return [];
+  }
+}
+
+
+
 let nudgeReady = false;
 let nudge = null;
 
@@ -717,7 +848,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.remove("show");
     }, 1200);
   };
-});;
+});
 </script>
 
 </body>
